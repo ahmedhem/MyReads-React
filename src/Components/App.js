@@ -4,6 +4,7 @@ import {getAll, update} from "../services/BooksAPI";
 import BookShelf from "./BookShelf";
 import SearchBar from "./SearchBooks/SearchBar";
 import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
+import NotFound from "./NotFound";
 
 function App() {
     const [books, setBooks] = useState([]);
@@ -12,13 +13,12 @@ function App() {
 
     const updateBookShelf = async (book, newShelf) => {
         setIsLoading(false);
-        update(book, newShelf).then(() => {
-            book.shelf = newShelf;
-            setBooks([...books.filter((bk) => {
-                return bk.id !== book.id;
-            }), book])
-            setIsLoading(true);
-        });
+        await update(book, newShelf);
+        book.shelf = newShelf;
+        setBooks([...books.filter((bk) => {
+            return bk.id !== book.id;
+        }), book])
+        setIsLoading(true);
     }
 
     useEffect(async () => {
@@ -33,6 +33,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="*" element={<NotFound />} />
                 <Route path="/" element={
                     <div className="app">
                         <div className="list-books">
@@ -56,7 +57,7 @@ function App() {
                     </div>
                 }></Route>
                 <Route path="/search" element={
-                    <SearchBar onUpdateBook={updateBookShelf} shelves={shelves}/>
+                    <SearchBar bookOnShelves={books} onUpdateBook={updateBookShelf} shelves={shelves}/>
                 }></Route>
             </Routes>
         </BrowserRouter>
