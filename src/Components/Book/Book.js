@@ -4,7 +4,6 @@ import {useState} from "react";
 const Book = ({book, shelves, onUpdateShelf}) => {
 
     let [curShelf, setCurShelf] = useState(book.shelf);
-    console.log(curShelf);
     const updateShelf = (e) => {
         const newShelf = e.target.value;
         setCurShelf(newShelf);
@@ -27,7 +26,7 @@ const Book = ({book, shelves, onUpdateShelf}) => {
                     </div>
                     <div className="book-title">{book.title}</div>
                     {book.authors && book.authors.map((author) => {
-                        return (<div className="book-authors">{author}</div>)
+                        return (<div key={author} className="book-authors">{author}</div>)
                     })}
                 </div>
 

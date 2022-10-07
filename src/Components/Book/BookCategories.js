@@ -1,5 +1,4 @@
 const BookCategories = ({currentCategory, shelves, onChangeShelf}) => {
-    console.log(currentCategory)
     return (
         <div className="book-shelf-changer">
             <select onChange={onChangeShelf} defaultValue={currentCategory}>

@@ -23,17 +23,16 @@ function App() {
 
     useEffect(async () => {
         setIsLoading(false);
-        getAll().then(books => {
-            setBooks(books)
-            setIsLoading(true);
-        });
+        const books = await getAll();
+        setBooks(books)
+        setIsLoading(true);
     }, [])
 
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<NotFound/>}/>
                 <Route path="/" element={
                     <div className="app">
                         <div className="list-books">

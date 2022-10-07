@@ -17,13 +17,12 @@ const SearchBar = ({bookOnShelves, onUpdateBook, shelves}) => {
          setCurBooks([]);
          return;
         }
-        search(searchVal, 5).then((res) => {
-            if (res.books.error)
-                setCurBooks([]);
-            else {
-                setCurBooks(res.books);
-            }
-        });
+        const res = await search(searchVal, 5);
+        if (res.books.error)
+            setCurBooks([]);
+        else {
+            setCurBooks(res.books);
+        }
     }, [searchVal])
     return (
         <div className="search-books">
@@ -50,7 +49,6 @@ const SearchBar = ({bookOnShelves, onUpdateBook, shelves}) => {
                                 return bk.id === book.id;
                             })
                             book.shelf = shelf.length > 0 ? shelf[0].shelf : "none";
-                            console.log(book);
                             return(
                                 <li key={book.id}>
                                     <Book book={book} shelves={shelves} onUpdateShelf={onUpdateBook}/>
